@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agosto &amp; Capo</title>
+  <meta name="description" content="Agosto &amp; Capo retro digitaalinen artistisivu.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="crt-shell">
+    <div class="crt-screen">
+      <div class="screen-noise"></div>
+
+      <div class="boot-screen" id="boot-screen">
+        <div class="boot-wrap">
+          <div class="boot-tv">
+            <div class="boot-screen-frame">
+              <div class="boot-screen-glow">
+                <video class="boot-static-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+                  <source src="assets/boot-vhs.mp4" type="video/mp4">
+                </video>
+                <div class="boot-vhs-ui">
+                  <div class="boot-vhs-row boot-vhs-row--top">
+                    <span>CH03</span>
+                    <span>TAPE</span>
+                  </div>
+                  <div class="boot-vhs-row boot-vhs-row--play">
+                    <button class="press-start" id="press-start" type="button">PLAY</button>
+                    <span class="boot-vhs-rec">&#9679; REC</span>
+                  </div>
+                  <div class="boot-vhs-row boot-vhs-row--time">
+                    <span></span>
+                    <span>1:00:01</span>
+                  </div>
+                  <h1 class="boot-logo">AGOSTO CAPO</h1>
+                  <p class="boot-start-hint">PRESS ANYWHERE TO START</p>
+                  <p class="boot-footer">&copy; 2025 Agosto &amp; Capo</p>
+                  <div class="boot-vhs-row boot-vhs-row--bottom">
+                    <span>TV&#9654;</span>
+                    <span>&#9664;LP</span>
+                  </div>
+                  <div class="boot-vhs-row boot-vhs-row--labels">
+                    <span>SOURCE</span>
+                    <span>DEST</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <aside class="boot-side-panel" aria-hidden="true">
+              <div class="boot-dial boot-dial--lg"></div>
+              <div class="boot-labels">
+                <span>VHF</span>
+                <span>UHF</span>
+              </div>
+              <div class="boot-mini-controls">
+                <span class="boot-dial boot-dial--sm"></span>
+                <span class="boot-dial boot-dial--sm"></span>
+                <span class="boot-dial boot-dial--sm"></span>
+              </div>
+              <div class="boot-speaker-grill"></div>
+            </aside>
+          </div>
+        </div>
+      </div>
+
+      <div class="page">
+        <main class="page-grid">
+          <section class="static-panel">
+            <div class="tv-controls">
+              <button class="tv-play-button" id="beat-toggle" type="button">Play Beat</button>
+              <span class="tv-status" id="beat-status">Audio: stop</span>
+            </div>
+            <audio id="background-beat" loop preload="auto">
+              <source src="assets/fein-beat.m4a" type="audio/mp4">
+              <source src="assets/fein-beat.wav" type="audio/wav">
+            </audio>
+          </section>
+
+          <section class="home-panel">
+            <div class="menu-window">
+              <div class="window-bar">
+                <span class="window-title-text">A_CAPO.EXE</span>
+                <span class="window-controls" aria-hidden="true">
+                  <span class="window-control"></span>
+                  <span class="window-control"></span>
+                  <span class="window-control"></span>
+                </span>
+              </div>
+              <h2 class="window-title">Agosto &amp; Capo</h2>
+              <div class="ticker-strip">
+                <div class="ticker-item">
+                  <span class="ticker-line">Artist 01</span>
+                  <span class="ticker-value">Agosto</span>
+                </div>
+                <div class="ticker-item">
+                  <span class="ticker-line">Artist 02</span>
+                  <span class="ticker-value">Capo</span>
+                </div>
+                <div class="ticker-item">
+                  <span class="ticker-line">Status</span>
+                  <span class="ticker-value">Unknown</span>
+                </div>
+              </div>
+
+              <div class="icon-grid">
+                <a class="icon-card is-selected" href="tietoa.html">
+                  <span class="pixel-icon pixel-icon--info">i</span>
+                  <span class="pixel-label">Tietoa</span>
+                  <span class="pixel-sub">artist file</span>
+                </a>
+                <a class="icon-card" href="live.html">
+                  <span class="pixel-icon pixel-icon--mp4 app-icon" aria-hidden="true"></span>
+                  <span class="pixel-label">MP4</span>
+                  <span class="pixel-sub">Härkäfest</span>
+                </a>
+                <a class="icon-card" href="galleria.html">
+                  <span class="pixel-icon pixel-icon--jpg app-icon" aria-hidden="true"></span>
+                  <span class="pixel-label">JPG</span>
+                  <span class="pixel-sub">still archive</span>
+                </a>
+                <a class="icon-card" href="https://open.spotify.com/artist/1PuefGqjAMYf6c6ufu7Sk7?si=6hqbIPsjRfOA3B9dMNwjXQ" target="_blank" rel="noreferrer">
+                  <span class="pixel-icon pixel-icon--spotify app-icon" aria-hidden="true"></span>
+                  <span class="pixel-label">Spotify</span>
+                  <span class="pixel-sub">listen</span>
+                </a>
+                <a class="icon-card" href="https://www.instagram.com/agosto.capo/" target="_blank" rel="noreferrer">
+                  <span class="pixel-icon pixel-icon--instagram app-icon" aria-hidden="true"></span>
+                  <span class="pixel-label">Instagram</span>
+                  <span class="pixel-sub">social</span>
+                </a>
+                <a class="icon-card" href="https://www.youtube.com/@AgostoCapo" target="_blank" rel="noreferrer">
+                  <span class="pixel-icon pixel-icon--youtube app-icon" aria-hidden="true"></span>
+                  <span class="pixel-label">YouTube</span>
+                  <span class="pixel-sub">video</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="screen-footer">
+              <p class="footer-copy">&copy; 2025 AGOSTO &amp; CAPO</p>
+              <div class="footer-links">
+                <a href="tietoa.html">Artist file</a>
+                <a href="live.html">Live archive</a>
+                <a href="galleria.html">Gallery</a>
+              </div>
+            </div>
+
+            <div class="contact-callout">
+              <a class="contact-link" href="contact.html">
+                <span class="contact-icon" aria-hidden="true"></span>
+                <span class="contact-text">Contact</span>
+              </a>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

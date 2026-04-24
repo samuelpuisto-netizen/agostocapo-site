@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Härkäfest keikka | Agosto & Capo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="crt-shell">
+    <div class="crt-screen">
+      <div class="screen-noise"></div>
+      <div class="page subpage-shell">
+        <header class="subpage-header">
+          <h1 class="subpage-title">Härkäfest keikka</h1>
+          <nav class="nav-links">
+            <a href="index.html">Menu</a>
+            <a href="tietoa.html">Tietoa</a>
+            <a href="galleria.html">Galleria</a>
+          </nav>
+        </header>
+
+        <section class="content-window">
+          <div class="window-bar window-bar--tight">
+            <span class="window-title-text">LIVE_PLAYER.EXE</span>
+            <span class="window-controls" aria-hidden="true">
+              <span class="window-control"></span>
+              <span class="window-control"></span>
+              <span class="window-control"></span>
+            </span>
+          </div>
+          <p class="status-line">Loaded / performance archive / clip playback</p>
+          <div class="video-stack">
+            <article class="video-window">
+              <div class="window-bar window-bar--video">
+                <span class="window-title-text">CLIP_01.MP4</span>
+                <span class="window-controls" aria-hidden="true">
+                  <span class="window-control"></span>
+                  <span class="window-control"></span>
+                  <span class="window-control"></span>
+                </span>
+              </div>
+              <p class="pixel-meta">Clip 01 / Härkäfest</p>
+              <video controls playsinline preload="metadata" poster="assets/img-8765.jpg">
+                <source src="assets/live-reel.mp4" type="video/mp4">
+                Selaimesi ei tue videon toistoa.
+              </video>
+              <h3>Livevideo 1</h3>
+              <p class="pixel-copy">Härkäfest-keikan tunnelmaa suoraan lavalta.</p>
+            </article>
+
+            <article class="video-window">
+              <div class="window-bar window-bar--video">
+                <span class="window-title-text">CLIP_02.MP4</span>
+                <span class="window-controls" aria-hidden="true">
+                  <span class="window-control"></span>
+                  <span class="window-control"></span>
+                  <span class="window-control"></span>
+                </span>
+              </div>
+              <p class="pixel-meta">Clip 02 / Härkäfest</p>
+              <video controls playsinline preload="metadata" poster="assets/img-8766.jpg">
+                <source src="assets/live-reel-2.mp4" type="video/mp4">
+                Selaimesi ei tue videon toistoa.
+              </video>
+              <h3>Livevideo 2</h3>
+              <p class="pixel-copy">Lisää keikkatunnelmaa ja yleisön mukanaoloa.</p>
+            </article>
+
+            <article class="spotify-window">
+              <div>
+              <img src="assets/duo-night.jpg" alt="Agosto ja Capo Spotifyssa.">
+              </div>
+              <div>
+                <p class="status-line">Audio / external app / spotify</p>
+                <p class="pixel-meta">Audio link</p>
+                <h3>Spotify</h3>
+                <p class="pixel-copy">Kuuntele Agosto &amp; Capon musiikkia Spotifyssa.</p>
+                <p style="margin-top: 1rem;">
+                  <a class="pixel-button" href="https://open.spotify.com/artist/1PuefGqjAMYf6c6ufu7Sk7?si=6hqbIPsjRfOA3B9dMNwjXQ" target="_blank" rel="noreferrer">Avaa Spotify</a>
+                </p>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

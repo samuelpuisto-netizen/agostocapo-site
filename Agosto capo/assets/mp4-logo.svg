@@ -1,0 +1,25 @@
+<svg width="260" height="150" viewBox="0 0 260 150" xmlns="http://www.w3.org/2000/svg">
+  <text
+    x="130"
+    y="70"
+    text-anchor="middle"
+    fill="#F5F5F1"
+    font-family="Arial Black, Arial, Helvetica, sans-serif"
+    font-size="58"
+    font-style="italic"
+    font-weight="900"
+    letter-spacing="-2"
+  >MP4</text>
+  <ellipse cx="130" cy="108" rx="88" ry="15" fill="#F5F5F1"/>
+  <text
+    x="130"
+    y="116"
+    text-anchor="middle"
+    fill="#050505"
+    font-family="Arial Black, Arial, Helvetica, sans-serif"
+    font-size="24"
+    font-style="italic"
+    font-weight="900"
+    letter-spacing="4"
+  >VIDEO</text>
+</svg>

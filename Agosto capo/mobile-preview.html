@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agosto &amp; Capo Mobile Preview</title>
+  <style>
+    :root {
+      --bezel: #1a1a1a;
+      --bezel-dark: #050505;
+      --screen-dark: #090909;
+      --screen-panel: rgba(18, 18, 18, 0.96);
+      --panel-soft: rgba(255, 255, 255, 0.05);
+      --line: rgba(255, 255, 255, 0.08);
+      --ink: #f2f0e8;
+      --muted: #bcb7ad;
+      --accent: #dad5c9;
+      --shadow: rgba(0, 0, 0, 0.4);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      color: var(--ink);
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.16), transparent 26%),
+        linear-gradient(180deg, #716f69 0%, #2c2c29 100%);
+    }
+
+    .preview-shell {
+      width: min(100%, 980px);
+      display: grid;
+      grid-template-columns: minmax(310px, 390px) minmax(260px, 1fr);
+      gap: 24px;
+      align-items: center;
+    }
+
+    .phone {
+      position: relative;
+      width: min(100%, 390px);
+      margin: 0 auto;
+      padding: 12px;
+      border-radius: 38px;
+      background:
+        linear-gradient(180deg, #20242a 0%, #090a0d 100%);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.16),
+        0 30px 80px rgba(0, 0, 0, 0.44);
+    }
+
+    .phone-screen {
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+      border: 2px solid rgba(255, 255, 255, 0.05);
+      background:
+        radial-gradient(circle at center, rgba(58, 58, 58, 0.2), rgba(6, 6, 6, 0.98)),
+        #050505;
+      min-height: 760px;
+    }
+
+    .phone-screen::before {
+      content: "";
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      z-index: 8;
+      width: 38%;
+      height: 22px;
+      border-radius: 999px;
+      transform: translateX(-50%);
+      background: rgba(8, 10, 14, 0.95);
+    }
+
+    .phone-screen::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 100% 3px, 3px 100%;
+      opacity: 0.55;
+    }
+
+    .app {
+      position: relative;
+      min-height: 760px;
+      padding: 44px 12px 14px;
+    }
+
+    .boot {
+      position: absolute;
+      inset: 0;
+      z-index: 7;
+      display: grid;
+      align-items: end;
+      padding: 26px 16px 18px;
+      background:
+        radial-gradient(circle at center, rgba(255, 255, 255, 0.08), rgba(7, 7, 7, 0.98));
+      background-color: #05070d;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 260ms ease, visibility 260ms ease;
+    }
+
+    .boot-video {
+      position: absolute;
+      inset: -2%;
+      width: 104%;
+      height: 104%;
+      object-fit: cover;
+      object-position: center center;
+      opacity: 0.94;
+      filter: saturate(0.92) contrast(1.08) brightness(0.88);
+      pointer-events: none;
+    }
+
+    .boot.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .boot::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0.02) 0 2px,
+          rgba(0, 0, 0, 0.16) 2px 4px
+        ),
+        radial-gradient(circle at center, rgba(88, 110, 255, 0.16), transparent 62%),
+        linear-gradient(180deg, rgba(40, 75, 255, 0.1), rgba(0, 0, 0, 0.24));
+      pointer-events: none;
+    }
+
+    .boot-card {
+      position: relative;
+      z-index: 1;
+      padding: 18px;
+      border-radius: 24px;
+      background: rgba(10, 10, 10, 0.74);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.34);
+      backdrop-filter: blur(10px);
+    }
+
+    .boot-row,
+    .boot-hint,
+    .window-name,
+    .ticker-line,
+    .ticker-value,
+    .icon-label,
+    .icon-sub,
+    .footer-copy,
+    .footer-link,
+    .note-kicker {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .boot-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .boot-title {
+      margin: 0;
+      font-size: 36px;
+      line-height: 0.92;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .boot-hint {
+      margin: 14px 0 0;
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .boot-button {
+      margin-top: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 48px;
+      border: 0;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #e8e3d8, #beb7aa);
+      color: #111;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .main-ui {
+      display: grid;
+      gap: 12px;
+    }
+
+    .static-panel,
+    .menu-window,
+    .contact-panel {
+      position: relative;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: var(--screen-panel);
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.03),
+        0 16px 34px rgba(0, 0, 0, 0.24);
+      overflow: hidden;
+    }
+
+    .static-panel {
+      min-height: 250px;
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.08), rgba(255, 255, 255, 0.03)),
+        repeating-linear-gradient(
+          90deg,
+          #4e4e4e 0 16px,
+          #727272 16px 32px,
+          #414141 32px 48px,
+          #646464 48px 64px
+        );
+      filter: grayscale(1);
+    }
+
+    .static-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0.08) 0 2px,
+          rgba(0, 0, 0, 0.12) 2px 4px
+        );
+      opacity: 0.45;
+    }
+
+    .screen-logo {
+      position: absolute;
+      inset: 50% auto auto 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      font-size: 34px;
+      line-height: 0.88;
+      text-align: center;
+      letter-spacing: 0.08em;
+      color: rgba(18, 18, 18, 0.28);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .dvd-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      z-index: 2;
+      width: 144px;
+      height: 144px;
+      border-radius: 50%;
+      border: 4px solid #141414;
+      background:
+        linear-gradient(135deg, #faf7ef, #d7d3cb 42%, #b9b4ac 70%, #f4f2ec 100%);
+      box-shadow:
+        inset 0 0 0 4px rgba(255, 255, 255, 0.24),
+        8px 8px 0 rgba(70, 70, 70, 0.44);
+      overflow: hidden;
+    }
+
+    .dvd-spin {
+      position: absolute;
+      inset: 8px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at center, rgba(229, 227, 219, 0.96) 0 14px, transparent 14px 100%),
+        url("assets/cd-cover.png") center/cover no-repeat,
+        conic-gradient(
+          from 0deg,
+          rgba(255, 255, 255, 0.34),
+          rgba(175, 175, 175, 0.18),
+          rgba(110, 110, 110, 0.18),
+          rgba(205, 205, 205, 0.16),
+          rgba(255, 255, 255, 0.34)
+        );
+      animation: disc-spin 3.8s linear infinite;
+      filter: grayscale(1) contrast(1.08);
+    }
+
+    .dvd-spin::before {
+      content: "";
+      position: absolute;
+      inset: 48px;
+      border-radius: 50%;
+      background: rgba(244, 240, 230, 0.9);
+      border: 3px solid #111;
+    }
+
+    .dvd-mark {
+      position: absolute;
+      left: 50%;
+      top: 58%;
+      transform: translate(-50%, -50%);
+      padding: 4px 6px;
+      border: 2px solid rgba(17, 17, 17, 0.72);
+      background: rgba(255, 255, 255, 0.74);
+      color: #111;
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .tv-controls {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      z-index: 3;
+      display: grid;
+      gap: 8px;
+    }
+
+    .tv-button,
+    .tv-status {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .tv-button {
+      border: 0;
+      background: linear-gradient(180deg, #ece8df, #cbc5bb);
+      color: #111;
+      cursor: pointer;
+      transition: transform 140ms ease, box-shadow 140ms ease, filter 140ms ease;
+    }
+
+    .tv-button:hover,
+    .tv-button:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+      filter: brightness(1.02);
+      outline: none;
+    }
+
+    .tv-button:active {
+      transform: translateY(0) scale(0.99);
+    }
+
+    .tv-status {
+      background: rgba(231, 227, 219, 0.82);
+      color: #2c2c2c;
+    }
+
+    .menu-window {
+      padding: 14px;
+    }
+
+    .window-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: -14px -14px 14px;
+      padding: 11px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(180deg, var(--bezel) 0%, var(--bezel-dark) 100%);
+    }
+
+    .window-name {
+      font-size: 10px;
+      color: #fff;
+    }
+
+    .window-controls {
+      display: flex;
+      gap: 5px;
+    }
+
+    .window-controls span {
+      width: 10px;
+      height: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.64);
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .window-title {
+      margin: 0 0 12px;
+      font-size: 28px;
+      line-height: 0.96;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .ticker-strip {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .ticker-item {
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .ticker-line {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 8px;
+      color: var(--muted);
+    }
+
+    .ticker-value {
+      display: block;
+      font-size: 11px;
+      color: var(--ink);
+    }
+
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .icon-card {
+      display: grid;
+      justify-items: center;
+      gap: 7px;
+      padding: 12px 8px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+      text-decoration: none;
+      transition:
+        transform 140ms ease,
+        background 140ms ease,
+        border-color 140ms ease,
+        box-shadow 140ms ease;
+    }
+
+    .icon-card.selected {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .icon-card:hover,
+    .icon-card:focus-visible {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.07);
+      border-color: rgba(255, 255, 255, 0.18);
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+        0 12px 24px rgba(0, 0, 0, 0.22);
+      outline: none;
+    }
+
+    .icon-card:active {
+      transform: translateY(0) scale(0.985);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .icon-shape {
+      width: 68px;
+      height: 68px;
+      border-radius: 16px;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-color: #c7c2b7;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.24),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.16);
+    }
+
+    .icon-shape.info {
+      display: grid;
+      place-items: center;
+      color: #111;
+      font-size: 28px;
+      font-weight: 700;
+      background-image: linear-gradient(180deg, #d7d2c6, #8f8b82);
+    }
+
+    .icon-shape.mp4 {
+      background-image: url("assets/mp4-logo.svg"), linear-gradient(180deg, #efefef, #8d8d8d);
+      background-size: 100% auto, cover;
+    }
+
+    .icon-shape.jpg {
+      background-image: url("assets/jpg-logo.svg"), linear-gradient(180deg, #efefef, #8d8d8d);
+      background-size: 100% auto, cover;
+    }
+
+    .icon-shape.spotify {
+      display: grid;
+      place-items: center;
+      background-image: linear-gradient(180deg, #d8ef8d 0%, #91bf27 76%, #214d16 100%);
+      color: #111;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .icon-shape.instagram {
+      display: grid;
+      place-items: center;
+      background-image: linear-gradient(135deg, #c96b2d, #f0cb42 48%, #4e9fbc);
+      color: #111;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .icon-shape.youtube {
+      display: grid;
+      place-items: center;
+      background-image: linear-gradient(180deg, #d7bf98 0%, #b38559 100%);
+      color: #111;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .icon-label {
+      font-size: 11px;
+      color: var(--ink);
+      text-align: center;
+    }
+
+    .icon-sub {
+      font-size: 8px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .screen-footer {
+      display: grid;
+      justify-items: center;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .footer-copy {
+      font-size: 9px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      align-items: center;
+    }
+
+    .footer-link {
+      font-size: 9px;
+      color: var(--ink);
+      text-decoration: none;
+      transition: opacity 140ms ease, transform 140ms ease;
+    }
+
+    .footer-link:hover,
+    .footer-link:focus-visible {
+      opacity: 0.8;
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .contact-panel {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 12px;
+      align-items: center;
+      padding: 14px;
+      text-decoration: none;
+      transition:
+        transform 140ms ease,
+        background 140ms ease,
+        border-color 140ms ease,
+        box-shadow 140ms ease;
+    }
+
+    .contact-panel:hover,
+    .contact-panel:focus-visible {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.14);
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+        0 12px 24px rgba(0, 0, 0, 0.22);
+      outline: none;
+    }
+
+    .contact-panel:active {
+      transform: translateY(0) scale(0.99);
+    }
+
+    .contact-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+        url("assets/contact-phone-final.png") center/contain no-repeat;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .contact-title {
+      margin: 0 0 6px;
+      font-size: 22px;
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .contact-copy {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .note {
+      padding: 26px;
+      border-radius: 28px;
+      background:
+        linear-gradient(180deg, rgba(26, 26, 26, 0.95), rgba(7, 7, 7, 0.98));
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+        0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .note-kicker {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .note h2 {
+      margin: 0 0 14px;
+      font-size: 32px;
+      line-height: 0.98;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .note p {
+      margin: 0 0 14px;
+      font-size: 15px;
+      line-height: 1.72;
+      color: var(--muted);
+    }
+
+    .note-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .note-item {
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    @keyframes disc-spin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (max-width: 920px) {
+      .preview-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .note {
+        order: -1;
+      }
+    }
+
+    @media (max-width: 560px) {
+      body {
+        padding: 10px;
+      }
+
+      .phone {
+        padding: 9px;
+        border-radius: 30px;
+      }
+
+      .phone-screen {
+        min-height: 700px;
+        border-radius: 22px;
+      }
+
+      .app {
+        min-height: 700px;
+        padding: 40px 10px 12px;
+      }
+
+      .phone-screen::before {
+        width: 42%;
+        height: 20px;
+      }
+
+      .dvd-badge {
+        width: 126px;
+        height: 126px;
+      }
+
+      .dvd-spin::before {
+        inset: 42px;
+      }
+
+      .contact-panel {
+        grid-template-columns: 1fr;
+        justify-items: start;
+      }
+
+      .note {
+        padding: 22px;
+      }
+
+      .note h2 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="preview-shell">
+    <section class="phone" aria-label="Agosto ja Capo mobiiliesikatselu">
+      <div class="phone-screen">
+        <div class="boot" id="boot-screen">
+          <video class="boot-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+            <source src="assets/boot-vhs.mp4" type="video/mp4">
+          </video>
+          <div class="boot-card">
+            <div class="boot-row">
+              <span>CH03</span>
+              <span>TAPE</span>
+            </div>
+            <h1 class="boot-title">Agosto<br>Capo</h1>
+            <p class="boot-hint">Press anywhere to start</p>
+            <button class="boot-button" id="boot-button" type="button">Play</button>
+          </div>
+        </div>
+
+        <div class="app">
+          <div class="main-ui">
+            <section class="static-panel">
+              <audio id="background-beat" loop preload="auto">
+                <source src="assets/fein-beat.m4a" type="audio/mp4">
+                <source src="assets/fein-beat.wav" type="audio/wav">
+              </audio>
+              <div class="dvd-badge">
+                <div class="dvd-spin">
+                  <span class="dvd-mark">DVD</span>
+                </div>
+              </div>
+              <div class="screen-logo">AGOSTO<br>CAPO</div>
+              <div class="tv-controls">
+                <button class="tv-button" id="beat-toggle" type="button">Play Beat</button>
+                <div class="tv-status" id="beat-status">Audio: stop</div>
+              </div>
+            </section>
+
+            <section class="menu-window">
+              <div class="window-bar">
+                <span class="window-name">A_CAPO.EXE</span>
+                <span class="window-controls" aria-hidden="true">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </span>
+              </div>
+
+              <h2 class="window-title">Agosto &amp; Capo</h2>
+
+              <div class="ticker-strip">
+                <div class="ticker-item">
+                  <span class="ticker-line">Artist 01</span>
+                  <span class="ticker-value">Agosto</span>
+                </div>
+                <div class="ticker-item">
+                  <span class="ticker-line">Artist 02</span>
+                  <span class="ticker-value">Capo</span>
+                </div>
+                <div class="ticker-item">
+                  <span class="ticker-line">Status</span>
+                  <span class="ticker-value">Unknown</span>
+                </div>
+              </div>
+
+              <div class="icon-grid">
+                <a class="icon-card selected" href="tietoa.html">
+                  <div class="icon-shape info">i</div>
+                  <div class="icon-label">Tietoa</div>
+                  <div class="icon-sub">artist file</div>
+                </a>
+                <a class="icon-card" href="live.html">
+                  <div class="icon-shape mp4"></div>
+                  <div class="icon-label">MP4</div>
+                  <div class="icon-sub">live archive</div>
+                </a>
+                <a class="icon-card" href="galleria.html">
+                  <div class="icon-shape jpg"></div>
+                  <div class="icon-label">JPG</div>
+                  <div class="icon-sub">still archive</div>
+                </a>
+                <a class="icon-card" href="https://open.spotify.com/artist/1PuefGqjAMYf6c6ufu7Sk7?si=6hqbIPsjRfOA3B9dMNwjXQ" target="_blank" rel="noreferrer">
+                  <div class="icon-shape spotify">SP</div>
+                  <div class="icon-label">Spotify</div>
+                  <div class="icon-sub">listen</div>
+                </a>
+                <a class="icon-card" href="https://www.instagram.com/agosto.capo/" target="_blank" rel="noreferrer">
+                  <div class="icon-shape instagram">IG</div>
+                  <div class="icon-label">Instagram</div>
+                  <div class="icon-sub">social</div>
+                </a>
+                <a class="icon-card" href="https://www.youtube.com/@AgostoCapo" target="_blank" rel="noreferrer">
+                  <div class="icon-shape youtube">YT</div>
+                  <div class="icon-label">YouTube</div>
+                  <div class="icon-sub">video</div>
+                </a>
+              </div>
+
+              <div class="screen-footer">
+                <div class="footer-copy">&copy; 2025 Agosto &amp; Capo</div>
+                <div class="footer-links">
+                  <a class="footer-link" href="tietoa.html">Artist file</a>
+                  <a class="footer-link" href="live.html">Live archive</a>
+                  <a class="footer-link" href="galleria.html">Gallery</a>
+                </div>
+              </div>
+            </section>
+
+            <a class="contact-panel" href="contact.html">
+              <div class="contact-icon" aria-hidden="true"></div>
+              <div>
+                <h3 class="contact-title">Contact</h3>
+                <p class="contact-copy">Sama contact-elementti kuin sivulla, mutta kasattu puhelimelle tiiviimpaan muotoon.</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="note">
+      <span class="note-kicker">Mobile direction</span>
+      <h2>Samat elementit, tiiviimpi puhelinlayout</h2>
+      <p>Tama preview kayttaa nyt samoja tunnistettavia osia kuin varsinainen sivu: boot-aloitus, static-paneeli, pyoriva CD, menuikkuna, ikoniruutu ja contact-blokki.</p>
+      <p>Ajatus ei ole keksiä kokonaan uutta sivua, vaan näyttää miten nykyinen Agosto Capo -verkkosivun maailma voisi asettua uskottavasti puhelimeen.</p>
+
+      <div class="note-list">
+        <div class="note-item">Start-ruutu on mukana edelleen, mutta se toimii puhelinfiiliksella.</div>
+        <div class="note-item">Pyoriva CD, static-paneeli ja menuikkuna ovat mukana samoina avainelementteina.</div>
+        <div class="note-item">Ikonit ja footer on pakattu kahden sarakkeen mobiiliasuun ilman, etta fiilis katoaa.</div>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    const bootScreen = document.getElementById("boot-screen");
+    const bootButton = document.getElementById("boot-button");
+    const beatToggle = document.getElementById("beat-toggle");
+    const beatStatus = document.getElementById("beat-status");
+    const backgroundBeat = document.getElementById("background-beat");
+
+    const dismissBoot = () => {
+      if (!bootScreen) {
+        return;
+      }
+
+      bootScreen.classList.add("hidden");
+    };
+
+    bootButton?.addEventListener("click", dismissBoot);
+    bootScreen?.addEventListener("click", dismissBoot);
+
+    if (beatToggle && beatStatus && backgroundBeat) {
+      backgroundBeat.volume = 0.45;
+
+      const syncBeatUi = () => {
+        const playing = !backgroundBeat.paused;
+        beatToggle.textContent = playing ? "Pause Beat" : "Play Beat";
+        beatStatus.textContent = playing ? "Audio: on" : "Audio: stop";
+      };
+
+      const toggleBeat = async (event) => {
+        event?.stopPropagation();
+        event?.preventDefault();
+
+        try {
+          if (backgroundBeat.paused) {
+            backgroundBeat.load();
+            await backgroundBeat.play();
+          } else {
+            backgroundBeat.pause();
+          }
+        } catch (_error) {
+          beatStatus.textContent = "Audio: blocked";
+        }
+
+        syncBeatUi();
+      };
+
+      const beatEventName = window.PointerEvent ? "pointerup" : "click";
+      beatToggle.addEventListener(beatEventName, (event) => {
+        void toggleBeat(event);
+      });
+
+      backgroundBeat.addEventListener("play", syncBeatUi);
+      backgroundBeat.addEventListener("pause", syncBeatUi);
+      backgroundBeat.addEventListener("ended", syncBeatUi);
+      syncBeatUi();
+    }
+  </script>
+</body>
+</html>
